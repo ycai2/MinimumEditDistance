@@ -49,6 +49,6 @@ public class Main {
     MinEditDist ed = new MinEditDist(sigma, similarityMatrix, seq1, seq2);
 
     ed.printTable();
-
+    ed.printSolution();
   }
 }

@@ -39,19 +39,10 @@ public class MinEditDist
       for (int j=1; j<n+1; j++){
         int topRight = table[i-1][j];
         int botLeft = table[i][j-1];
-        char a = seq1.charAt(i-1);
-        char b = seq2.charAt(j-1);
-        int ind_seq1 = findIndex(a);
-        int ind_seq2 = findIndex(b); 
 
-        System.out.println("penalty: " + similarityMatrix[ind_seq1][ind_seq2]);
-        
-        
-
-        int calc = similarityMatrix[ind_seq1][ind_seq2] + table[i-1][j-1];
-        //int minOfGaps = Math.min(topRight, botLeft);
-        //table[i][j] = Math.min(calc, minOfGaps);
+        int calc = penaltyCost(i, j)+ table[i-1][j-1];
         table[i][j] = findMin(calc, topRight, botLeft);
+
         System.out.println("Min is " + table[i][j]);
         printTable();
         System.out.println();
@@ -75,8 +66,17 @@ public class MinEditDist
     return ind;
   }
 
-  private int findMin(int a, int b, int c){
-    return Math.min(a, Math.min(b + gap, c + gap));
+  private int penaltyCost(int ind1, int ind2){
+    char a = seq1.charAt(ind1 - 1);
+    char b = seq2.charAt(ind2 - 1);
+    int ind_seq1 = findIndex(a);
+    int ind_seq2 = findIndex(b);
+    int sol = similarityMatrix[ind_seq1][ind_seq2];
+    return sol;
+  }
+
+  private int findMin(int a, int topRight, int botLeft){
+    return Math.min(a, Math.min(topRight + gap, botLeft + gap));
   }
 
   public void printTable(){
@@ -88,15 +88,60 @@ public class MinEditDist
     }
   }
 
-  /*private void printSolution(){
-    Stack<char> trace = new Stack<char>();
-    int i = seq1.length() + 1;
-    int j = seq2.length() + 1;
+  public void printSolution(){
+    Stack seq1_trace = new Stack();
+    Stack seq2_trace = new Stack();
+    Stack cost = new Stack();
+    int i = seq1.length();
+    int j = seq2.length();
     
 
-    while ((i != 0) || (j != 0)){
-      if (table[i][j] == mintable[])
+    while ((i > 0) || (j > 0)){
+      //System.out.println("table["+i+"]["+j+"]=" + table[i][j] + "\n");
+      int calc = penaltyCost(i, j) + table[i-1][j-1];
+      int minimum = findMin(calc, table[i-1][j], table[i][j-1]);
+      //System.out.println("\ncalc "+calc+"\ngap1 "+(table[i-1][j]+gap)+"\ngap2 "+(table[i][j-1]+gap)+"\nmin "+minimum);
+
+
+      if (minimum == calc){
+        seq1_trace.push(seq1.charAt(i-1));
+        seq2_trace.push(seq2.charAt(j-1));
+        cost.push(penaltyCost(i, j));
+        i--;
+        j--;
+      }else if (minimum == (table[i-1][j] + gap)){
+        seq2_trace.push('-');
+        seq1_trace.push(seq1.charAt(i-1));
+        cost.push(gap);
+        i--;
+      }else if (minimum == (table[i][j-1] + gap)){
+        seq1_trace.push('-');
+        seq2_trace.push(seq2.charAt(j-1));
+        cost.push(gap);
+        j--;
+      }
+
+      // if (i == 0){
+      //   while (j > 0){
+          
+      //   }
+      // }
     }
 
-  }*/
+    while (!seq1_trace.empty()){
+      System.out.print(seq1_trace.pop() + " ");
+    }
+    System.out.println();
+    
+    while (!seq2_trace.empty()){
+      System.out.print(seq2_trace.pop() + " ");
+    }
+    System.out.println();
+
+    while (!cost.empty()){
+      System.out.print(cost.pop() + " ");
+    }
+    
+    System.out.println();
+  }
 }
