@@ -96,7 +96,7 @@ public class MinEditDist
     int j = seq2.length();
     
 
-    while ((i > 0) || (j > 0)){
+    while ((i > 0) && (j > 0)){
       //System.out.println("table["+i+"]["+j+"]=" + table[i][j] + "\n");
       int calc = penaltyCost(i, j) + table[i-1][j-1];
       int minimum = findMin(calc, table[i-1][j], table[i][j-1]);
@@ -121,11 +121,23 @@ public class MinEditDist
         j--;
       }
 
-      // if (i == 0){
-      //   while (j > 0){
-          
-      //   }
-      // }
+      if (i == 0){
+        while (j > 0){
+          seq1_trace.push('-');
+          seq2_trace.push(seq2.charAt(j-1));
+          cost.push(gap);
+          j--;
+        }
+      }
+
+      if (j == 0){
+        while (i > 0){
+          seq2_trace.push('-');
+          seq1_trace.push(seq1.charAt(i-1));
+          cost.push(gap);
+          i--;
+        }
+      }
     }
 
     while (!seq1_trace.empty()){
