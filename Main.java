@@ -47,8 +47,8 @@ public class Main {
     sc.close();
 
     MinEditDist ed = new MinEditDist(sigma, similarityMatrix, seq1, seq2);
-
-    ed.printTable();
+    System.out.println("The best alignment is");
+    //ed.printTable();
     ed.printSolution();
   }
 }
