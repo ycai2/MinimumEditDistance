@@ -1,14 +1,16 @@
-Virus Infection Problem
+#Virus Infection Problem
 
-======author=========
+Author
+===============
 by Yisheng Cai
 
-===========Implementation=========
+Implementation
+====================
 The minimum cost alignment (Minimum Edit Distance) that finds an O(mn)-time algorithm to find the best alignment of s and t and justify its correctness and running time for given DNA sequences s and t of lengths m and n, respectively, both defined over the alphabet {A,C,G,T}.
 The algorithm prints out a minimum value of all optimal alignments and 
 
-
-=====Usage=======
+Usage
+============
 Prepare any input file under the same directory as the program files.
 The format has to be:
   -first row is sigma, which is the cost of inserting a gap
