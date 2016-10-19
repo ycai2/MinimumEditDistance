@@ -27,9 +27,11 @@ AAAGTCTGAC
 AACGTTTAC
 
 
- Run program with $javac *.java
-                  $java Main
-                  $your_input_file_name
-
+ Run program with 
+```
+$javac *.java
+$java Main
+$your_input_file_name
+```
 
 
